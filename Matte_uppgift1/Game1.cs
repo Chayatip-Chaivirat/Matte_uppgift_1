@@ -50,8 +50,7 @@ namespace Matte_uppgift1
             float vectorX = MousePos.Position.X - circleCenter.X;
             float vectorY = MousePos.Position.Y - circleCenter.Y;
 
-            double vectorLenght = vectorX * vectorX + vectorY*vectorY;
-            vectorLenght = Math.Sqrt(vectorLenght);
+            double vectorLenght = Math.Sqrt( vectorX * vectorX + vectorY*vectorY );
             float radius = Diameter / 2;
             if (vectorLenght <= radius)
             {
@@ -61,8 +60,6 @@ namespace Matte_uppgift1
             {
                 circleColor = Color.Red;
             }
-            System.Console.WriteLine(vectorLenght);
-            System.Console.WriteLine(Diameter);
             Debug.WriteLine(vectorLenght);
             Debug.WriteLine(radius);
 
