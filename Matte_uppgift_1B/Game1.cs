@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Matte_uppgift_1B
 {
@@ -8,6 +9,15 @@ namespace Matte_uppgift_1B
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        public Rectangle carRec;
+        public Vector2 carPos;
+        public Texture2D carTex;
+        //public double rotation;
+
+        Car car;
+        public Texture2D circleTex;
+        public Rectangle circle;
+        public Vector2 circlePos;
 
         public Game1()
         {
@@ -26,8 +36,15 @@ namespace Matte_uppgift_1B
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            carRec = new Rectangle(0,0,100,100);
+            carPos = new Vector2(100,100);
+            carTex = Content.Load<Texture2D>("ball (1)");
+            car = new Car(carTex, carRec, carPos);
+            //rotation = 1 / Math.Sqrt((long)carPos.X ^2 + (long)carPos.Y ^2);
 
-            // TODO: use this.Content to load your game content here
+            circleTex = Content.Load<Texture2D>("ball (1)");
+            circle = new Rectangle(0, 0, 50, 50);
+            circlePos = new Vector2(200,200);
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,7 +52,11 @@ namespace Matte_uppgift_1B
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            do
+            {
+                car.CreateABall();
+            }
+            while (false);
 
             base.Update(gameTime);
         }
@@ -44,7 +65,9 @@ namespace Matte_uppgift_1B
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            car.Draw(_spriteBatch);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
