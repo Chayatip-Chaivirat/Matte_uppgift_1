@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Diagnostics;
 
 namespace Matte_uppgift1
 {
@@ -8,7 +10,13 @@ namespace Matte_uppgift1
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        public Texture2D circleTex;
+        public Rectangle circleRec;
+        public int Diameter;
+        public Vector2 circleCenter;
+        public Vector2 circleRecPos;
+        public MouseState MousePos;
+        public Color circleColor;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -26,26 +34,48 @@ namespace Matte_uppgift1
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            circleTex = Content.Load<Texture2D>("ball");
+            Diameter = 100;
+            circleRecPos = new Vector2(Window.ClientBounds.Width / 2 - Diameter/ 2, Window.ClientBounds.Height / 2 - Diameter / 2);
+            circleRec = new Rectangle((int)circleRecPos.X,(int)circleRecPos.Y,Diameter,Diameter);
+            circleCenter = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            circleColor = Color.Red;
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            MousePos = Mouse.GetState();
+            float vectorX = MousePos.Position.X - circleCenter.X;
+            float vectorY = MousePos.Position.Y - circleCenter.Y;
 
-            // TODO: Add your update logic here
+            double vectorLenght = vectorX * vectorX + vectorY*vectorY;
+            vectorLenght = Math.Sqrt(vectorLenght);
+            if (vectorLenght <= Diameter/2)
+            {
+                circleColor = Color.White;
+            }
+            else
+            {
+                circleColor = Color.Red;
+            }
+            System.Console.WriteLine(vectorLenght);
+            System.Console.WriteLine(Diameter);
+            Debug.WriteLine(vectorLenght);
+            Debug.WriteLine(Diameter);
 
-            base.Update(gameTime);
+                base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            _spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Draw(circleTex, circleRec, circleColor);
 
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
