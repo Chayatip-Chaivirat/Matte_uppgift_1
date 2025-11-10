@@ -38,7 +38,7 @@ namespace Matte_uppgift1
             Diameter = 100;
             circleRecPos = new Vector2(Window.ClientBounds.Width / 2 - Diameter/ 2, Window.ClientBounds.Height / 2 - Diameter / 2);
             circleRec = new Rectangle((int)circleRecPos.X,(int)circleRecPos.Y,Diameter,Diameter);
-            circleCenter = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            circleCenter = new Vector2(Window.ClientBounds.Width/2, Window.ClientBounds.Height/2);
             circleColor = Color.Red;
         }
 
@@ -52,7 +52,8 @@ namespace Matte_uppgift1
 
             double vectorLenght = vectorX * vectorX + vectorY*vectorY;
             vectorLenght = Math.Sqrt(vectorLenght);
-            if (vectorLenght <= Diameter/2)
+            float radius = Diameter / 2;
+            if (vectorLenght <= radius)
             {
                 circleColor = Color.White;
             }
@@ -63,7 +64,7 @@ namespace Matte_uppgift1
             System.Console.WriteLine(vectorLenght);
             System.Console.WriteLine(Diameter);
             Debug.WriteLine(vectorLenght);
-            Debug.WriteLine(Diameter);
+            Debug.WriteLine(radius);
 
                 base.Update(gameTime);
         }
